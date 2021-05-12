@@ -1,0 +1,13 @@
+A = int(input("Введите количество билетов"))
+B = [int(input("Введите возраст посетителя")) for i in range(A)]
+S = 0
+for i in range (A):
+    if 25 >= B[i] >= 18:
+        S = S + 990
+    if B[i] >= 26:
+        S = S + 1390
+    else:
+            S = S + 0
+if A > 3:
+    S = S - S * 0.1
+print ("Сумма к оплате", S)    
