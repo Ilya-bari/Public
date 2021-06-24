@@ -1,0 +1,61 @@
+def qsort(array, left, right):
+    middle = (left + right) // 2
+
+    p = array[middle]
+    i, j = left, right
+    while i <= j:
+        while array[i] < p:
+            i += 1
+        while array[j] > p:
+            j -= 1
+        if i <= j:
+            array[i], array[j] = array[j], array[i]
+            i += 1
+            j -= 1
+
+    if j > left:
+        qsort(array, left, j)
+    if right > i:
+        qsort(array, i, right)
+    return array
+
+def binary_search(array, element, left, right):
+    if left > right:  # если левая граница превысила правую,
+        return False  # значит элемент отсутствует
+
+    middle = (right + left) // 2  # находимо середину
+    if array[middle] == element:  # если элемент в середине,
+        return middle  # возвращаем этот индекс
+    elif element < array[middle]:  # если элемент меньше элемента в середине
+        # рекурсивно ищем в левой половине
+        return binary_search (array, element, left, middle - 1)
+    else:  # иначе в правой
+        return binary_search (array, element, middle + 1, right)
+
+l_n = input ("Введите несколько целых чисел через пробел: ")
+l_n = list(map(int, l_n.split()))
+c_n = input ("Ведите любое целое число: ")
+l_n.append(int(c_n))
+print ("Добавляем введенное число в последовательность", l_n)
+array = l_n
+left = 0
+right = len(array)-1
+l_n = qsort(array, left ,right)
+print ("После быстрой сортировки", l_n)
+array = l_n
+element = int(c_n)
+left = 0
+right = len(l_n)-1
+
+ind = binary_search (array, element, left, right)
+
+if ind == 0 or ind == 1 and array[ind-1] == array[ind]:
+    print ("Это первый элемент в списке")
+elif ind == (len(array)-1):
+    print ("Это последний элемент в списке")
+else:
+    print ("индекс числа", ind-1, "меньше введенного")
+    if array[ind] == array[ind + 1] or array[ind] == array[ind - 1]:
+        print ("следующее число в списке совпадает с добавленным")
+    else:
+        print ("индекс числа", ind+1, "больше введенного")
